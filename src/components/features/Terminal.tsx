@@ -37,19 +37,19 @@ export function Terminal() {
                 output = (
                     <div className="space-y-1">
                         <p>Available commands:</p>
-                        <p className="text-green-400">whoami</p>
-                        <p className="text-green-400">contact</p>
-                        <p className="text-green-400">stack</p>
-                        <p className="text-green-400">clear</p>
-                        <p className="text-green-400">sudo hire</p>
+                        <p className="text-blue-400">whoami</p>
+                        <p className="text-blue-400">contact</p>
+                        <p className="text-blue-400">stack</p>
+                        <p className="text-blue-400">clear</p>
+                        <p className="text-blue-400">sudo hire</p>
                     </div>
                 );
                 break;
             case "whoami":
-                output = "Ankit Kumar Yadav. Full Stack Dev. Robotics Enthusiast. Coffee Consumer.";
+                output = "Ankit Kumar Yadav. Full Stack Dev. Systems Architect. Caffeine Transducer.";
                 break;
             case "contact":
-                output = "Email: ankit@example.com | GitHub: @Ankit420H";
+                output = "Email: 2050yadavankit@gmail.com | GitHub: @Ankit420H";
                 break;
             case "stack":
                 output = "React, Next.js, TypeScript, Python, C++, AWS, Docker.";
@@ -76,10 +76,12 @@ export function Terminal() {
                 <motion.button
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="fixed bottom-6 right-6 z-50 p-3 bg-black border border-white/10 rounded-full shadow-2xl hover:border-green-500/50 transition-colors group"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="fixed bottom-6 right-6 z-50 p-4 glass shadow-[0_8px_32px_rgba(0,0,0,0.4)] rounded-full hover:border-white/20 transition-all duration-300 group"
                     onClick={() => setIsOpen(true)}
                 >
-                    <TerminalIcon className="w-5 h-5 text-gray-400 group-hover:text-green-400 transition-colors" />
+                    <TerminalIcon className="w-5 h-5 text-[#a1a1a6] group-hover:text-white transition-colors" />
                 </motion.button>
             )}
 
@@ -87,58 +89,57 @@ export function Terminal() {
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                        initial={{ opacity: 0, y: 40, scale: 0.9, filter: "blur(10px)" }}
                         animate={{
                             opacity: 1,
-                            y: isMinimized ? 0 : 0,
+                            y: 0,
                             scale: 1,
-                            height: isMinimized ? "auto" : "300px",
-                            width: isMinimized ? "200px" : "min(500px, 90vw)"
+                            filter: "blur(0px)",
+                            height: isMinimized ? "48px" : "380px",
+                            width: isMinimized ? "240px" : "min(550px, 90vw)"
                         }}
-                        exit={{ opacity: 0, y: 20, scale: 0.95 }}
+                        exit={{ opacity: 0, y: 40, scale: 0.9, filter: "blur(10px)" }}
+                        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                         className={cn(
-                            "fixed bottom-6 right-6 z-50 bg-black/90 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl overflow-hidden flex flex-col font-mono text-sm",
-                            isMinimized ? "h-12" : "h-[300px]"
+                            "fixed bottom-6 right-6 z-50 glass-panel overflow-hidden flex flex-col font-mono text-[13px]",
+                            isMinimized ? "" : ""
                         )}
                     >
-                        {/* Header */}
-                        <div className="flex items-center justify-between px-4 py-2 bg-white/5 border-b border-white/5 cursor-pointer" onClick={() => setIsMinimized(!isMinimized)}>
+                        {/* Header (Apple-like Mac Window Controls) */}
+                        <div className="flex items-center justify-between px-4 py-3 bg-white/[0.02] border-b border-white/[0.05] cursor-pointer hover:bg-white/[0.04] transition-colors" onClick={() => setIsMinimized(!isMinimized)}>
                             <div className="flex items-center gap-2">
-                                <TerminalIcon className="w-3 h-3 text-green-500" />
-                                <span className="text-xs text-gray-400">guest@ankit-portfolio ~</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <button onClick={(e) => { e.stopPropagation(); setIsMinimized(!isMinimized); }} className="hover:text-white text-gray-500">
-                                    {isMinimized ? <Maximize2 className="w-3 h-3" /> : <Minus className="w-3 h-3" />}
-                                </button>
-                                <button onClick={(e) => { e.stopPropagation(); setIsOpen(false); }} className="hover:text-red-400 text-gray-500">
-                                    <X className="w-3 h-3" />
-                                </button>
+                                <div className="flex gap-1.5 mr-2">
+                                    <button onClick={(e) => { e.stopPropagation(); setIsOpen(false); }} className="w-3 h-3 rounded-full bg-[#ff5f56] hover:bg-[#ff5f56]/80 transition-colors" />
+                                    <button onClick={(e) => { e.stopPropagation(); setIsMinimized(!isMinimized); }} className="w-3 h-3 rounded-full bg-[#ffbd2e] hover:bg-[#ffbd2e]/80 transition-colors" />
+                                    <button onClick={(e) => { e.stopPropagation(); setIsMinimized(false); }} className="w-3 h-3 rounded-full bg-[#27c93f] hover:bg-[#27c93f]/80 transition-colors" />
+                                </div>
+                                <TerminalIcon className="w-3.5 h-3.5 text-[#a1a1a6]" />
+                                <span className="text-[11px] text-[#a1a1a6] font-medium tracking-wide">guest@ankit-os ~</span>
                             </div>
                         </div>
 
                         {/* Content */}
                         {!isMinimized && (
-                            <div className="flex-1 p-4 overflow-y-auto space-y-2 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+                            <div className="flex-1 p-5 overflow-y-auto space-y-3 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
                                 {history.map((entry, i) => (
-                                    <div key={i} className="space-y-1">
-                                        <div className="flex items-center gap-2 text-gray-500">
-                                            <span className="text-green-500">➜</span>
-                                            <span>{entry.input}</span>
+                                    <div key={i} className="space-y-1.5">
+                                        <div className="flex items-center gap-2 text-[#a1a1a6]">
+                                            <span className="text-blue-500">➜</span>
+                                            <span className="text-white">{entry.input}</span>
                                         </div>
-                                        <div className="text-gray-300 pl-4 leading-relaxed">{entry.output}</div>
+                                        <div className="text-[#a1a1a6] pl-5 leading-relaxed font-light">{entry.output}</div>
                                     </div>
                                 ))}
 
-                                <form onSubmit={handleCommand} className="flex items-center gap-2 mt-2">
-                                    <span className="text-green-500">➜</span>
+                                <form onSubmit={handleCommand} className="flex items-center gap-2 mt-3 pl-0.5">
+                                    <span className="text-blue-500 font-bold">➜</span>
                                     <input
                                         ref={inputRef}
                                         type="text"
                                         value={input}
                                         onChange={(e) => setInput(e.target.value)}
-                                        className="flex-1 bg-transparent border-none outline-none text-white placeholder-gray-600"
-                                        placeholder="Type help..."
+                                        className="flex-1 bg-transparent border-none outline-none text-white placeholder-white/20 font-light"
+                                        placeholder="Type a command..."
                                         autoFocus
                                     />
                                 </form>
